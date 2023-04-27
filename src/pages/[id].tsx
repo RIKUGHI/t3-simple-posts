@@ -10,7 +10,7 @@ const Detail = () => {
   const { query, push } = useRouter()
 
   const post = api.post.getById.useQuery(
-    { id: query.id ?? "" },
+    { id: (query.id ?? "") as string },
     {
       onSuccess: (data) => {
         setTitle(data.title)
@@ -18,7 +18,7 @@ const Detail = () => {
       },
     }
   )
-  const { mutate, error } = api.post.create.useMutation({
+  const { mutate, error } = api.post.update.useMutation({
     onSuccess: (data) => {
       push("/")
     },
@@ -28,12 +28,13 @@ const Detail = () => {
   const [content, setContent] = useState("")
 
   const onSubmit = (e: FormEvent) => {
-    // e.preventDefault()
-    // mutate({
-    //   title,
-    //   content,
-    // })
-    // console.log(error?.data?.zodError?.fieldErrors.content)
+    e.preventDefault()
+    mutate({
+      id: query.id as string,
+      title,
+      content,
+    })
+    console.log(error?.data?.zodError?.fieldErrors.content)
   }
   return (
     <>
@@ -58,7 +59,7 @@ const Detail = () => {
               onChange={(v) => setContent(v)}
             />
 
-            <Button name="Submit" />
+            <Button name="Update" />
           </form>
           {error?.data?.zodError?.fieldErrors.content && (
             <span className="rounded-lg border border-red-600 p-2 text-red-600">

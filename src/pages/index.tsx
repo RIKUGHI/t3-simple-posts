@@ -30,7 +30,11 @@ const Home: NextPage = () => {
           {posts.isLoading
             ? "Loading..."
             : posts.data?.map((post, i) => (
-                <SimplePost key={post.id} post={post} />
+                <SimplePost
+                  key={post.id}
+                  post={post}
+                  onSuccess={() => posts.refetch()}
+                />
               ))}
           {/* <div className="flex flex-col items-center gap-2">
             <p className="text-2xl text-white">
