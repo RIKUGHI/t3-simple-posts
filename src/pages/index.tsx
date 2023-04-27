@@ -1,14 +1,15 @@
-import { type NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { type NextPage } from "next"
+import Head from "next/head"
+import Link from "next/link"
+import { signIn, signOut, useSession } from "next-auth/react"
 
-import { api } from "~/utils/api";
-import Navbar from "~/components/atoms/NavBar";
-import SimplePost from "~/components/atoms/SimplePost";
+import { api } from "~/utils/api"
+import Navbar from "~/components/atoms/NavBar"
+import SimplePost from "~/components/atoms/SimplePost"
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const hello = api.example.hello.useQuery({ text: "from tRPC" })
+  const posts = api.post.all.useQuery()
 
   return (
     <>
@@ -26,7 +27,11 @@ const Home: NextPage = () => {
           Create
         </Link>
         <main className="mt-4 grid grid-cols-4 gap-4">
-          <SimplePost />
+          {posts.isLoading
+            ? "Loading..."
+            : posts.data?.map((post, i) => (
+                <SimplePost key={post.id} post={post} />
+              ))}
           {/* <div className="flex flex-col items-center gap-2">
             <p className="text-2xl text-white">
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
@@ -36,18 +41,18 @@ const Home: NextPage = () => {
         </main>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
 
 const AuthShowcase: React.FC = () => {
-  const { data: sessionData } = useSession();
+  const { data: sessionData } = useSession()
 
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
     undefined, // no input
     { enabled: sessionData?.user !== undefined }
-  );
+  )
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
@@ -62,5 +67,5 @@ const AuthShowcase: React.FC = () => {
         {sessionData ? "Sign out" : "Sign in"}
       </button>
     </div>
-  );
-};
+  )
+}
