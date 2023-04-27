@@ -13,6 +13,19 @@ export const postRouter = createTRPCRouter({
       },
     })
   }),
+  getById: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(({ ctx, input }) => {
+      return ctx.prisma.post.findUniqueOrThrow({
+        where: {
+          id: input.id,
+        },
+      })
+    }),
   create: publicProcedure
     .input(
       z.object({

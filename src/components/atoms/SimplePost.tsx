@@ -10,7 +10,7 @@ interface Props {
 const SimplePost = ({ post }: Props) => {
   return (
     <div className="flex flex-col rounded-lg border border-black p-2">
-      <Link href={`/1`}>
+      <Link href={`/${post.id}`}>
         <h2 className="text-lg font-bold">{post.title}</h2>
       </Link>
       <p>{post.content}</p>
