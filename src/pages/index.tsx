@@ -6,6 +6,7 @@ import { signIn, signOut, useSession } from "next-auth/react"
 import { api } from "~/utils/api"
 import Navbar from "~/components/atoms/NavBar"
 import SimplePost from "~/components/atoms/SimplePost"
+import Button from "~/components/atoms/Button"
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" })
@@ -26,6 +27,7 @@ const Home: NextPage = () => {
         >
           Create
         </Link>
+        <Button name="Login" onClick={() => signIn()} />
         <main className="mt-4 grid grid-cols-4 gap-4">
           {posts.isLoading
             ? "Loading..."
@@ -36,13 +38,13 @@ const Home: NextPage = () => {
                   onSuccess={() => posts.refetch()}
                 />
               ))}
-          {/* <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
-            <AuthShowcase />
-          </div> */}
         </main>
+        <div className="flex flex-col items-center gap-2 bg-black py-2">
+          <p className="text-2xl text-white">
+            {hello.data ? hello.data.greeting : "Loading tRPC query..."}
+          </p>
+          <AuthShowcase />
+        </div>
       </div>
     </>
   )
@@ -52,6 +54,7 @@ export default Home
 
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession()
+  console.log(sessionData)
 
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
     undefined, // no input

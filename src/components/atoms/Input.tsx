@@ -1,15 +1,15 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent } from "react"
 
 interface Props {
-  name: string;
-  value?: string;
-  onChange?: (value: string) => void;
+  name: string
+  value?: string
+  onChange?: (value: string) => void
 }
 
 const Input = ({ name, value, onChange }: Props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (onChange) onChange(e.target.value);
-  };
+    if (onChange) onChange(e.target.value)
+  }
 
   return (
     <div className="w-56">
@@ -22,12 +22,13 @@ const Input = ({ name, value, onChange }: Props) => {
       <input
         type="text"
         id={name}
+        autoComplete="off"
         className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         value={value}
         onChange={handleChange}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Input;
+export default Input

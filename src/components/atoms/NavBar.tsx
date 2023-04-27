@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 const Navbar = () => {
-  const currentRoute = usePathname();
+  const currentRoute = usePathname()
   const groupMenus = [
     [
       {
@@ -13,8 +13,12 @@ const Navbar = () => {
         name: "Posts",
         path: "/posts",
       },
+      {
+        name: "Sign Up",
+        path: "/sign-up",
+      },
     ],
-  ];
+  ]
 
   return (
     <nav className="flex justify-between py-4">
@@ -32,7 +36,7 @@ const Navbar = () => {
         </div>
       ))}
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
