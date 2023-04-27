@@ -1,3 +1,4 @@
+import { z } from "zod"
 import {
   createTRPCRouter,
   publicProcedure,
@@ -12,4 +13,20 @@ export const postRouter = createTRPCRouter({
       },
     })
   }),
+  create: publicProcedure
+    .input(
+      z.object({
+        title: z.string(),
+        content: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.post.create({
+        data: {
+          title: input.title,
+          content: input.content,
+          userId: "b1",
+        },
+      })
+    }),
 })
