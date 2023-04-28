@@ -65,7 +65,7 @@ export const authOptions: NextAuthOptions = {
           type: "password",
         },
       },
-      authorize(credentials, req) {
+      async authorize(credentials, req) {
         const { email, password } = credentials as {
           email: string
           password: string
@@ -77,7 +77,12 @@ export const authOptions: NextAuthOptions = {
         }
 
         // if everything is fine
-        return { id: "b1", name: "admin", email: "admin@gmail.com" }
+        const user = await prisma.user.findFirst({
+          where: { id: "b1" },
+        })
+        // console.log(user)
+        return user
+        // return { id: "b1", name: "admin", email: "admin@gmail.com", image: "x" }
       },
     }),
     /**
